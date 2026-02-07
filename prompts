@@ -1,8 +1,64 @@
 # Prompts
 
 ## Constitution
+
+```
 1. 所有变量必须指定类型。类型使用 pydantic, typing
 2. 所有关键功能必须有单元测试。单元测试使用 pytest
 3. 相关功能使用有文档。文档使用markdown
 4. 可以只写关键功能的单元测试。测试覆盖率 >= 60%
+```
 
+## Sepc
+
+```
+开发一个通过读取AOW4 Wiki, 然后列出Tome相关信息
+
+## 获取Tome 列表
+- 读取 https://aow4.paradoxwikis.com/Tomes
+- 获取七个大类的 Tomes, 一共大概60多个Tomes
+- 列出所有Tome的列表
+
+## 获取指定Tome的信息
+- 读取 https://aow4.paradoxwikis.com/<Tome Link>
+- 获取Tome页面中 Summary, Tome skills, 以及页面右边的信息
+```
+
+## Plan
+
+```
+# 相关技术栈
+- 获取解动态页面, 使用playwright
+- 对于获取后的数据配置缓存, 使用Redis；一旦获取成功后，从缓存直接获取结果，不再访问页面
+- 缓存只在用户指定时刷新, 缓存时间为不过期
+
+# 功能要求
+- 有一个可运行的CLI
+- --list 列出所有Tome的列表
+- --show <Tome> 获取指定Tome的信息
+- --refresh 刷新缓存
+- 对于tome list，只要求7个大类。请忽略 `Other tomes`
+- 转换Tier字段中的罗马数字为数字
+
+# 数据模型
+## Tome 
+- tome: str
+- tier: int
+- category: str
+- tome_page_link: str
+
+## Tome Detail
+- summary: str
+- tome_skills: list[Tome Skill]
+- tome_info: dict
+
+## Tome Skill
+- skill: str
+- tier: int 
+- type: list[str] 
+- effects: list[str]
+- units: None or ['Shield', 'Fighter', 'Shock', ...] 
+
+# 测试要求
+- 对于tome list, 增加一个测试项目，测试只有七个大类。没有 `Other Tomes`
+```

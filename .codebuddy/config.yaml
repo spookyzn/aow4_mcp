@@ -1,0 +1,31 @@
+python:
+  interpreter:  /Users/zhuning/MyProjects/aow4_mcp/.venv/bin/python # 指定具体的 Python 解释器路径
+  venv_path: ./.venv  # 虚拟环境路径
+
+  # 包管理工具：pip、uv、poetry
+  package_manager: uv
+  
+  # 依赖安装命令（可选，会根据 package_manager 自动生成）
+  install_command: uv add {package} 
+  
+  # 列出已安装包的命令
+  list_command: uv pip list
+  
+  # 运行命令模板（可选）
+  run_command: uv run python {file}
+
+# 项目设置
+project:
+  # 入口文件
+  entry: main.py
+  
+  # 源代码目录
+  src_dir: src 
+  
+  # 测试目录
+  test_dir: tests
+
+# 环境变量（可选）
+environment:
+  PYTHONPATH: /Users/zhuning/MyProjects/aow4_mcp/.venv 
+  DEBUG: "true"

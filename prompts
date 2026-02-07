@@ -1,0 +1,8 @@
+# Prompts
+
+## Constitution
+1. 所有变量必须指定类型。类型使用 pydantic, typing
+2. 所有关键功能必须有单元测试。单元测试使用 pytest
+3. 相关功能使用有文档。文档使用markdown
+4. 可以只写关键功能的单元测试。测试覆盖率 >= 60%
+

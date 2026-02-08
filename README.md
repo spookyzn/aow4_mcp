@@ -49,19 +49,6 @@ aow4-tome show "Nature's Wrath"
 aow4-tome show "Nature's Wrath" --json
 ```
 
-### Refresh Cache
-
-```bash
-# Refresh all cached data
-aow4-tome refresh
-
-# Refresh only tome list
-aow4-tome refresh --list-only
-
-# Refresh specific tome
-aow4-tome refresh --detail "Nature's Wrath"
-```
-
 ### Options
 
 - `--json`: Output as JSON instead of formatted tables
@@ -76,6 +63,26 @@ aow4-tome refresh --detail "Nature's Wrath"
 | `AOW4_REDIS_URL` | `redis://localhost:6379/0` | Redis connection URL |
 | `AOW4_TIMEOUT` | `30` | Request timeout in seconds |
 | `AOW4_HEADLESS` | `true` | Run Playwright in headless mode |
+
+## Configure MCP servers
+
+```json
+{
+  "mcpServers": {
+    "AOW4_Tomes": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/aow4_mcp",
+        "run",
+        "aow4_mcp.py"
+      ],
+      "disabled": false,
+      "timeout": 60
+    }
+  }
+}
+```
 
 ## Development
 

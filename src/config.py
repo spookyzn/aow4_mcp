@@ -41,3 +41,13 @@ UNIT_TYPES: Final[list[str]] = [
     "Flying",
     "Siege",
 ]
+
+# Affinity Types
+AFFINITY_TYPES: Final[list[str]] = [
+    "Nature",
+    "Chaos",
+    "Order",
+    "Shadow",
+    "Astral",
+    "Materium",
+]

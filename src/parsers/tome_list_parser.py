@@ -2,7 +2,7 @@
 
 from bs4 import BeautifulSoup, Tag
 
-from src.config import VALID_CATEGORIES, WIKI_BASE_URL
+from src.config import VALID_CATEGORIES, WIKI_BASE_URL, AFFINITY_TYPES
 from src.models.tome import Tome
 from src.exceptions import ParseError
 from src.utils.roman_numerals import roman_to_int
@@ -122,12 +122,20 @@ class TomeListParser:
 
             # Try to extract tier from the name or additional cells
             tier = self._extract_tier(name, cells)
+            
+            if category in AFFINITY_TYPES:
+                affinity: list[str] = []
+                affinity.append(f"+2 {category}")
+            else:
+                # Hybird tomes
+                affinity = self._extract_affinity(cells)
 
             return Tome(
                 name=name,
                 tier=tier,
                 category=category,
                 link=link,  # type: ignore
+                affinity=affinity,
             )
         except Exception as e:
             raise ParseError(
@@ -166,3 +174,9 @@ class TomeListParser:
 
         # Default to tier 1 if not found
         return 1
+
+    def _extract_affinity(self, cells: list[Tag]) -> list[str]:
+        """Extract affinity from table cells."""
+        res: list[str] = []
+        text = cells[2].get_text(separator=" ", strip=True)
+        return [f"+1 {aff}" for aff in text.split()] 

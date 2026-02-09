@@ -141,7 +141,8 @@ class TomeDetailParser:
                 skill_types = "Unknown"
             
             # Extract effects
-            effects_text = cells[4].get_text(strip=False).replace("\n", " ").replace("\u00a0", "") if len(cells) > 3 else ""
+            effects_text = cells[4].get_text(separator=" ", strip=True) if len(cells) > 3 else ""
+            #.replace("\n", " ").replace("\u00a0", "") if len(cells) > 3 else ""
             if not effects_text:
                 effects_text = "Unknown"
             
@@ -178,5 +179,5 @@ class TomeDetailParser:
         # Get all list items
         lis = rows[2].find_all("li")
         for li in lis:
-            info.append(li.get_text(strip=False))
+            info.append(li.get_text(strip=True, separator=" "))
         return info

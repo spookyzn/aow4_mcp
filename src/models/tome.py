@@ -16,12 +16,14 @@ class Tome(BaseModel):
         tier: Tome tier as integer (1-7)
         category: Tome category (one of 7 main types)
         link: Wiki page URL
+        affinity: List of affinity elements
     """
     
     name: str = Field(..., description="Tome name")
     tier: int = Field(..., ge=1, le=7, description="Tome tier (1-7)")
     category: str = Field(..., description="Tome category (one of 7 main types)")
     link: HttpUrl = Field(..., description="Wiki page URL")
+    affinity: list[str] = Field(default_factory=list, description="Affinity elements")
     
     @field_validator("category")
     @classmethod
@@ -45,6 +47,7 @@ class Tome(BaseModel):
             "tier": self.tier,
             "category": self.category,
             "link": str(self.link),
+            "affinity": self.affinity,
         }
 
     @classmethod

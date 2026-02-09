@@ -14,7 +14,8 @@ description: 当询问奇迹时代4(AOW4)魔典(Tome)信息，或者询问相关
 - Tier III tomes require 4 tomes and 3 points in their affinity
 - Tier IV tomes require 6 tomes and 6 points in their affinity
 - Tier V tomes require 8 tomes and 8 points in their affinity and only one tier V tome can be unlocked per game
-
+- 关于Hybrid tomes的所属Affinity, 查看tomes 列表中每个项目的 affinity字段。其中表明了该Hybrid tome 的属于 affinity
+- Hybrid tomes I, II, III, IV, and V are unlocked in the same way as their non-hybrid counterparts
 
 ## 获取魔典数据
 获取数据时，第一优先使用缓存中的数据。除非用户明确指出不使用缓存数据
@@ -69,13 +70,13 @@ description: 当询问奇迹时代4(AOW4)魔典(Tome)信息，或者询问相关
 
 ### Step 3 
 1. 按上面的魔典解锁规则选择下一个可以解锁的魔典。
-2. 随机选取4个技能, 按上面的技能统计方法进行统计
+2. 随机选取3-4个技能, 按上面的技能统计方法进行统计
 3. 再次按上面的魔典解锁规则选择可以解锁的魔典, 直到可以选到第一本五级魔典为止
 
 ### Step 4
 比较所有路径的技能统计结果，提供最优的魔典选择路径
 判断最优的路径的规则如下，优先级从高到低
-1. 按照单位增强效果
+1. 按照单一单位附魔效果最多
 2. 按照技能强度进行评分，强度越高越好
 
 ### Step 5

@@ -1,70 +1,28 @@
-# AOW4 Tome Scraper
+## 介绍
+该项目是一个MCP+SKills的AI试验项目。主要想看看AI可否对于策略游戏进行指导和辅助。奇迹时代4 中的魔典是游戏中非常重要的一个元素，玩家可以通过魔典来提升自己的属性，从而获得更强的战斗力。魔典的选择和技能的选择，对于玩家来说是一个非常重要的决策。AI可以帮助玩家进行魔典的选择和技能的选择。有任何想法和建议，欢迎提issue。
 
-CLI tool to fetch and cache Age of Wonders 4 Tome information from the official Wiki.
+相关魔典数据来源:
+https://aow4.paradoxwikis.com/Tomes
 
-## Features
-
-- **List all Tomes**: Display all 60+ Tomes grouped by their 7 categories (Nature, Chaos, Order, Shadow, Creation, Destruction, Materium)
-- **Show Tome Details**: View detailed information including Summary, Skills, and Attributes
-- **Redis Caching**: Fast subsequent lookups with manual refresh control
-- **JSON Output**: Script-friendly output format
-- **Rich Tables**: Beautiful terminal output with colors
-
-## Installation
-
-```bash
-# Clone the repository
-git clone <repo-url>
-cd aow4-mcp
-
-# Install dependencies
-uv pip install -e .
-
-# Install Playwright browsers
-playwright install chromium
-
-# Start Redis (required for caching)
-redis-server
+## 安装
+- 使用UV
+```
+$ git clone <repo>
+$ cd aow4_mcp
+$ uv sync
 ```
 
-## Usage
+- 配置redis server
 
-### List All Tomes
-
-```bash
-# Display as table
-aow4-tome list
-
-# Output as JSON
-aow4-tome list --json
+直接使用docker创建redis server
+```
+$ docker run -d -p 6379:6379 redis
 ```
 
-### Show Tome Details
+## Agent Skills 安装
+- aow4_tome 为Agent Skills插件，按使用的Agent工具，安装至对应的目录
 
-```bash
-# Display formatted details
-aow4-tome show "Nature's Wrath"
-
-# Output as JSON
-aow4-tome show "Nature's Wrath" --json
-```
-
-### Options
-
-- `--json`: Output as JSON instead of formatted tables
-- `--no-cache`: Skip cache and fetch from Wiki
-- `--verbose, -v`: Show verbose output
-- `--version`: Show version
-
-## Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `AOW4_REDIS_URL` | `redis://localhost:6379/0` | Redis connection URL |
-| `AOW4_TIMEOUT` | `30` | Request timeout in seconds |
-| `AOW4_HEADLESS` | `true` | Run Playwright in headless mode |
-
-## Configure MCP servers
+## MCP server 配置 
 
 ```json
 {
@@ -84,26 +42,67 @@ aow4-tome show "Nature's Wrath" --json
 }
 ```
 
-## Development
+## 使用
 
-```bash
-# Run tests
-uv run pytest
+在Agent工具中，配置MCP server 及 Skills
 
-# Run tests with coverage
-uv run pytest --cov=src
+```
+@ 奇迹时代4
+种族点数： 秩序+2；暗影+1;  物质+1
+起始魔典：纪律
+如何构建最佳魔典BUILD
 
-# Type checking
-uv run mypy src/
+@AI: 用户想知道如何构建最佳魔典BUILD。
+
+根据available_skills中有一个aow4_tome技能，描述是：
+"当询问奇迹时代4(AOW4)魔典(Tome)信息，或者询问相关魔典问题，魔典出发什么技能；提供初始魔典后，后续魔典如何选择；最佳的魔典选择路径，最优的魔典选择路径"
+...
+```
+具体查看[sample1](https://github.com/kenzhu/aow4_mcp/main/samples/test1.md)
+
+## CLI
+- list-tomes: 列出所有魔典
+```
+$ uv run aow4-tome list-tomes
+                  AOW4 Tomes                  
+┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━┓
+┃ Category ┃ Name                     ┃ Tier ┃
+┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━┩
+│ Astral   │ Evocation                │  I   │
+│          │ Warding                  │  I   │
+│          │ Scrying                  │  II  │
+│          │ Summoning                │  II  │
+│          │ Amplification            │ III  │
+│          │ Teleportation            │ III  │
+│          │ Astral Convergence       │  IV  │
+│          │ The Astral Mirror        │  IV  │
+│          │ The Arch Mage            │  V   │
 ```
 
-## Architecture
+- show tome: 显示魔典的详细信息
+```
+$ uv run aow4-tome show --json "Evocation"
+{
+  "name": "Evocation",
+  "tier": 1,
+  "category": "Astral",
+  "summary": "Tier I - Grants excellent and cheap attack spells to any aspiring wizard.",
+  "tome_skills": [
+    {
+      "name": "Lightning Focus",
+      "tier": 1,
+      "type": "Unit enchantment",
+      "effects": "Makes base Magic attacks of enchanted units: Deal +2 Lightning Damage. Gains base 30% chance of
+inflicting Electrified, a damage-over-time effect. Effects are increased for non-repeating attacks.\nAffected 
+unit types: Support Unit Battle Mage Unit"
+    },
+  ... ]
+...
+}
+```
 
-- **src/models/**: Pydantic data models (Tome, TomeDetail, TomeSkill)
-- **src/services/**: Core services (WikiClient, CacheManager, TomeService)
-- **src/parsers/**: HTML parsing logic
+## 主要文件 
+
+- **aow4_mcp.py**: MCP server
 - **src/cli.py**: Typer CLI interface
-
-## License
-
-MIT
+- **src/config.py**: Configuration settings

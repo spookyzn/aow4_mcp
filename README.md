@@ -58,7 +58,7 @@ $ docker run -d -p 6379:6379 redis
 "当询问奇迹时代4(AOW4)魔典(Tome)信息，或者询问相关魔典问题，魔典出发什么技能；提供初始魔典后，后续魔典如何选择；最佳的魔典选择路径，最优的魔典选择路径"
 ...
 ```
-具体查看[sample1](https://github.com/kenzhu/aow4_mcp/main/samples/test1.md)
+具体查看>>> 该结果由codebuddy+GLM5生成 [sample1](https://github.com/kenzhu/aow4_mcp/main/samples/test1.md)
 
 ## CLI
 - list-tomes: 列出所有魔典

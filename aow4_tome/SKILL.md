@@ -26,11 +26,24 @@ disable: false
 
 ## 魔典解锁规则
 ### 解锁规则如下:
+- Tier I tomes are always available
+- Tier II tomes require 2 tomes
+- Tier III tomes require 4 tomes and 3 points in their affinity
+- Tier IV tomes require 6 tomes and 6 points in their affinity
+- Tier V tomes require 8 tomes and 8 points in their affinity and only one tier V tome can be unlocked per game
 - 一级魔典：始终可用
 - 二级魔典：需要 2 本魔典
 - 三级魔典：需要 4 本魔典且Affinity >= 3 点
 - 四级魔典：需要 6 本魔典且Affinity >= 6 点
 - 五级魔典：需要 8 本魔典且Affinity >= 8 点，且每局游戏只能解锁一本五级魔典
+
+
+## 最佳选择策略
+- 第2, 3, 4本魔典可以按起始魔典的 Affinity 点数来选择。 比如：某一 Affinity 点数>=6，或者某2种 Affinity 点数相加>=6
+- 第5，6 本魔典选择不用在意魔典 Affinity 种类，可以按魔典中的单位附魔技能为优先。一级，二级魔典优先。选择时考虑魔典中的单位附魔技能，与之前单位附魔技能交集越大的魔典。比如：之前魔典技能加强的是远程单位，那后续魔典就尽量选择远程单位的魔典。
+- 第7，8 本魔典必须是四级魔典
+- 第9本魔典必须是五级魔典
+
 
 ## 获取魔典数据
 获取数据时，第一优先使用缓存中的数据。除非用户明确指出不使用缓存数据
@@ -38,7 +51,7 @@ disable: false
 
 ## 技能统计方法 
 
-按如下方式分类统计单位 enchantment 技能
+按如下方式分类统计单位附魔技能
 - Unit Enchantment
     - Ranged Unit
     - Skirmisher Unit
@@ -74,8 +87,9 @@ disable: false
 
 比如：
 ```
+文化：封建-帝君
 起始魔典: 野兽
-种族点数: 自然+2; 物质+2
+Affinity 点数: 自然+2; 物质+2
 ```
 
 ### Step 2
@@ -83,9 +97,9 @@ disable: false
 
 ### Step 3 
 1. 按上面的`魔典解锁规则`查看当前可以解锁的魔典。
-2. 查看所有可用魔典之中的技能。优先考虑有单位附魔的魔典，并且和之前选择魔典中的单位附魔技能交集越大的。 其次按奇迹时代4专家思维方式，依据之前已经选择的魔典，选择一个最合适的魔典 
+2. 按文中的最佳选择策略，选择下一本魔典 
 3. 加上选择魔典的Affinity点
-4. 按奇迹时代4专家推荐的技能选择规则选取3-4个技能
+4. 按奇迹时代4专家推荐的技能选择规则选取4个技能，优先考虑单位附魔技能
 
 ### Step 4
 按上面的`魔典解锁规则`，判断是否可以解锁五级魔典。
@@ -129,3 +143,4 @@ disable: false
 - ❌ 不要跳过魔典解锁规则，比如：解锁四级魔典时，之前只解锁了5本魔典。解锁五级魔典时，之前只解锁了7本魔典。
 - ❌ 不要把一本Hybrid魔典计算为2本。该类魔典只是拥有2种Affinity点数。并不是两本魔典
 - ❌ 不要捏造魔典的Affinity点数
+
